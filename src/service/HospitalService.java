@@ -14,6 +14,7 @@ public interface HospitalService {
 
 	/**
 	 * 모든 진료과 검색
+	 * *
 	 */
 	List<DeptDto> deptSelectAll() throws SearchWrongException;
 	
