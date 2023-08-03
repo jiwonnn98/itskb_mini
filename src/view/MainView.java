@@ -92,19 +92,19 @@ public class MainView {
                     logout(patientSeq);
                     return;
                 case 2:
-                    HospitalController.reservationInsert();
+                    // TODO HospitalController.reservationAdd();
                     break;
                 case 3:
-                    // TODO 예약 조회
+                    // TODO HospitalController.reservationList();
                     break;
                 case 4:
-                    // TODO 예약 날짜 변경
+                    // TODO HospitalController.reservationModifyDate();
                     break;
                 case 5:
-                    // TODO 예약 취소
+                    // TODO HospitalController.reservationCancel();
                     break;
                 case 6:
-                    // TODO 진료 조회
+                    // TODO HospitalController.diagnosisList();
                     break;
                 default:
                     System.out.println("보기에서 메뉴를 선택해 주세요. ");
