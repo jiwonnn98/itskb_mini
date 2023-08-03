@@ -40,6 +40,11 @@ public class MainView {
         }
     }
 
+    private static void startMenu() {
+        System.out.println("시작메뉴");
+        System.out.println("1. 신규 환자 | 2. 로그인 | 9. 종료");
+    }
+
     private static void register() {
         System.out.print("이름 : ");
         String patientName = sc.nextLine();
@@ -66,9 +71,10 @@ public class MainView {
         PatientController.login(patientName, patientSSN);
     }
 
-    private static void startMenu() {
-        System.out.println("시작메뉴");
-        System.out.println("1. 신규 환자 | 2. 로그인 | 9. 종료");
+    public static void logout(int patientSeq) {
+        Session session = sessionSet.get(patientSeq);
+
+        sessionSet.remove(session);
     }
 
     // TODO : 로그인 성공 시 메뉴
