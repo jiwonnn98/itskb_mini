@@ -83,7 +83,7 @@ public class HospitalDaoImpl implements HospitalDao {
 			}
 			patientDto.setDiagnosisDtoList(list);
 		} catch (SQLException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw new SearchWrongException("진료 내역 검색 중 오류가 발생하였습니다.\n다음에 이용해 주세요 ^^;;");
 		} finally {
 			DBManager.releaseConnection(con, ps, rs);
