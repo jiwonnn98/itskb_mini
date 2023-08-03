@@ -8,9 +8,9 @@ public interface PatientDao {
     /**
      * 환자 로그인
      *
-     * @param patientDto
+     * @param patientDto 환자정보
      */
-    int login(PatientDto patientDto) throws SessionException;
+    PatientDto login(PatientDto patientDto) throws SessionException;
 
     /**
      * 새로운 환자 추가

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * JDBC를 위한 로드, 연결, 닫기
+ * JDBC를 위한 로드, 연결, 닫기 test
  */
 public class DBManager {
 
