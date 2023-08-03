@@ -78,7 +78,9 @@ public class HospitalDaoImpl implements HospitalDao {
 	public int cancleReservByReservNumber(int reservationSeq) throws DMLException {
 		Connection con = null;
 		PreparedStatement ps = null;
+		PreparedStatement ps2 = null;
 		ResultSet rs = null;
+		int result = 0;
 		String sql = "select * from reservation where reservation_seq = ?";
 		try {
 			con = DBManager.getConnection();
@@ -92,22 +94,15 @@ public class HospitalDaoImpl implements HospitalDao {
 					throw new DMLException("당일 예약은 취소할 수 없습니다.");
 				}
 			}
-		} catch (SQLException e) {
-			throw new DMLException("취소 도중 오류가 발생했습니다!!");
-		}finally {
-			DBManager.releaseConnection(con, ps, rs);
-		}
-		int result = 0;
-		sql = "delete from reservation where reservation_seq = ?";
-		try {
-			con = DBManager.getConnection();
-			ps = con.prepareStatement(sql);
-			ps.setInt(1, reservationSeq);
-			
+			sql = "delete from reservation where reservation_seq = ?";
+			ps2 = con.prepareStatement(sql);
+			ps2.setInt(1, reservationSeq);
 			result = ps.executeUpdate();
 		} catch (SQLException e) {
 //			e.printStackTrace();
-			throw new DMLException("취소 도중 오류가 발생했습니다.");
+			throw new DMLException("취소 도중 오류가 발생했습니다!!");
+		}finally {
+			DBManager.releaseConnection(con, ps, rs);
 		}
 		return result;
 	}
