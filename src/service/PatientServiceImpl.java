@@ -6,6 +6,7 @@ import model.dao.PatientDao;
 import model.dao.PatientDaoImpl;
 import model.dto.PatientDto;
 import session.Session;
+import session.SessionSet;
 
 public class PatientServiceImpl  implements PatientService{
     PatientDao patientDao = new PatientDaoImpl();
@@ -20,7 +21,9 @@ public class PatientServiceImpl  implements PatientService{
         }
         //로그인 정보 저장
         Session session = new Session(result.getPatientSeq(), result.getPatientName());
-
+        SessionSet sessionSet = SessionSet.getInstance();
+        sessionSet.add(session);
+        
         return session;
     }
 
