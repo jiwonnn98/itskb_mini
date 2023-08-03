@@ -6,6 +6,7 @@ import model.dto.PatientDto;
 import service.PatientService;
 import service.PatientServiceImpl;
 import session.Session;
+import session.SessionSet;
 
 public class PatientController {
     static PatientService patientService = new PatientServiceImpl();
@@ -18,7 +19,6 @@ public class PatientController {
             PatientDto patientDto = new PatientDto(patientName, patientSSN);
             Session session = patientService.login(patientDto);
             //MenuView.printUserMenu(patientName);
-
         } catch (Exception e) {
             //FailView.errorMessage(e.getMessage());
         }
