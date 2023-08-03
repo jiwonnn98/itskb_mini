@@ -47,7 +47,7 @@ public interface HospitalService {
      * @return
      * @throws SearchWrongException
      */
-    List<ReservationDto> reserveSelectAllByPatient() throws SearchWrongException;
+    List<ReservationDto> reserveSelectAllByPatient(PatientDto patientDto) throws SearchWrongException;
 
     /**
      * 환자 자신의 예약 취소

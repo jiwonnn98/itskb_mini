@@ -46,9 +46,11 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 
 	@Override
-	public List<ReservationDto> reserveSelectAllByPatient() throws SearchWrongException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ReservationDto> reserveSelectAllByPatient(PatientDto patientDto) throws SearchWrongException {
+		PatientDto pDto = hospitalDao.reserveSelectAllByPatient(patientDto);
+		if(pDto.getReservationDtoList() == null)
+			throw new SearchWrongException("환자 본인의 예약 내역이 존재하지 않습니다.");
+		return pDto.getReservationDtoList();
 	}
 
 	@Override

@@ -42,7 +42,7 @@ public interface HospitalDao {
      * @return
      * @throws SearchWrongException
      */
-    PatientDto reservSelectAllByPatient(PatientDto patientDto) throws SearchWrongException;
+    PatientDto reserveSelectAllByPatient(PatientDto patientDto) throws SearchWrongException;
 
     /**
      * 환자 자신의 예약 취소
