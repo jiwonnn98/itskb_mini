@@ -25,7 +25,7 @@ public interface HospitalDao {
      * @return
      * @throws SearchWrongException
      */
-    List<DoctorDto> doctorSelectAllByDept() throws SearchWrongException;
+    List<DoctorDto> doctorSelectAllByDept(int deptcode) throws SearchWrongException;
 
     /**
      * 의사에 해당하는 가능한 진료시간 검색
@@ -33,7 +33,16 @@ public interface HospitalDao {
      * @return
      * @throws SearchWrongException
      */
-    DoctorDto timeSelectAllByDoctor() throws SearchWrongException;
+    DoctorDto timeSelectAllByDoctor(int doctorSeq) throws SearchWrongException;
+    
+    /**
+     * 예약 추가
+     * @param reserv
+     * @return
+     * @throws DMLException
+     */
+    int insertReservation(ReservationDto reserv) throws DMLException;
+    
 
     /**
      * 환자 자신의 예약 내역 조회
@@ -79,4 +88,12 @@ public interface HospitalDao {
      * @throws DMLException
      */
     int insertPatient(PatientDto patientDto) throws DMLException;
+    
+    /**
+     * 의사 예약 현황 검색
+     * @param scheduleSeq
+     * @return
+     * @throws SearchWrongException
+     */
+    public List<Integer> selectReservationByDoctor(int scheduleSeq) throws SearchWrongException;
 }
