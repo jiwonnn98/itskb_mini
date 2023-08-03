@@ -30,6 +30,7 @@ public class PatientDto {
     public PatientDto(String patientName, String patientSSN) {
         this.patientName = patientName;
         this.patientSSN = patientSSN;
+        this.patientSeq = -1; // setter 오류를 확인하기 위한 초기화
     }
 
     /**
@@ -53,6 +54,7 @@ public class PatientDto {
     public void setPatientName(String patientName) {
         this.patientName = patientName;
     }
+
 
     public String getPatientSSN() {
         return patientSSN;
@@ -80,6 +82,10 @@ public class PatientDto {
 
     public int getPatientSeq() {
         return patientSeq;
+    }
+
+    public void setPatientSeq(int patientSeq) {
+        this.patientSeq = patientSeq;
     }
 
     public List<ReservationDto> getReservationDtoList() {
