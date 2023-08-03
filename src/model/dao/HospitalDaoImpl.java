@@ -107,7 +107,7 @@ public class HospitalDaoImpl implements HospitalDao {
 			result = ps.executeUpdate();
 		} catch (SQLException e) {
 //			e.printStackTrace();
-			throw new DMLException("삭제도중 오류가 발생했습니다.");
+			throw new DMLException("취소 도중 오류가 발생했습니다.");
 		}
 		return result;
 	}

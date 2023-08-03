@@ -55,8 +55,10 @@ public class HospitalServiceImpl implements HospitalService {
 
 	@Override
 	public void cancelReservableReserveNumber(int reservationSeq) throws DMLException {
-		// TODO Auto-generated method stub
-
+		int result = hospitalDao.cancleReservByReservNumber(reservationSeq);
+		if(result == 0) {
+			throw new DMLException("취소되지 않았습니다");
+		}
 	}
 
 	@Override
