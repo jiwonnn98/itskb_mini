@@ -10,7 +10,7 @@ public class PatientDto {
     private String patientPhone;
 
     List<ReservationDto> reservationDtoList;
-    List<ScheduleDto> scheduleDtoList;
+    List<DiagnosisDto> diagnosisDtoList;
 
     /**
      * 환자 번호로 예약, 진료 내역 조회 시 사용
@@ -30,6 +30,7 @@ public class PatientDto {
     public PatientDto(String patientName, String patientSSN) {
         this.patientName = patientName;
         this.patientSSN = patientSSN;
+        this.patientSeq = -1; // setter 오류를 확인하기 위한 초기화
     }
 
     /**
@@ -53,6 +54,7 @@ public class PatientDto {
     public void setPatientName(String patientName) {
         this.patientName = patientName;
     }
+
 
     public String getPatientSSN() {
         return patientSSN;
@@ -82,6 +84,10 @@ public class PatientDto {
         return patientSeq;
     }
 
+    public void setPatientSeq(int patientSeq) {
+        this.patientSeq = patientSeq;
+    }
+
     public List<ReservationDto> getReservationDtoList() {
         return reservationDtoList;
     }
@@ -90,12 +96,12 @@ public class PatientDto {
         this.reservationDtoList = reservationDtoList;
     }
 
-    public List<ScheduleDto> getScheduleDtoList() {
-        return scheduleDtoList;
+    public List<DiagnosisDto> getDiagnosisDtoList() {
+        return diagnosisDtoList;
     }
 
-    public void setScheduleDtoList(List<ScheduleDto> scheduleDtoList) {
-        this.scheduleDtoList = scheduleDtoList;
+    public void setDiagnosisDtoList(List<DiagnosisDto> diagnosisDtoList) {
+        this.diagnosisDtoList = diagnosisDtoList;
     }
 
     @Override

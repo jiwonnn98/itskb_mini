@@ -3,6 +3,7 @@ package service;
 import model.dto.PatientDto;
 import exception.DMLException;
 import exception.SessionException;
+import session.Session;
 
 public interface PatientService {
 
@@ -12,7 +13,7 @@ public interface PatientService {
      * @param patientDto 환자 정보
      * @throws SessionException
      */
-    void login(PatientDto patientDto) throws SessionException;
+    Session login(PatientDto patientDto) throws SessionException;
 
     /**
      * 새로운 환자 추가

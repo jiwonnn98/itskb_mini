@@ -1,5 +1,6 @@
 package service;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,11 +18,11 @@ import model.dto.ScheduleDto;
 public class HospitalServiceImpl implements HospitalService {
 	
 	private static HospitalService instance = new HospitalServiceImpl();
+	private HospitalDao hospitalDao = HospitalDaoImpl.getInstance();
 	private HospitalServiceImpl() {}
 	public static HospitalService getInstance() {
 		return instance;
 	}
-	private HospitalDao hospitalDao = HospitalDaoImpl.getInstance();
 	
 	@Override
 	public List<DeptDto> deptSelectAll() throws SearchWrongException {
@@ -31,6 +32,7 @@ public class HospitalServiceImpl implements HospitalService {
 		}
 		
 		return list;
+
 	}
 
 	@Override
@@ -40,10 +42,12 @@ public class HospitalServiceImpl implements HospitalService {
 			throw new SearchWrongException("조회가능한 의사가 없습니다.");
 		}
 		return list;
+
 	}
 
 	@Override
 	public int[][] timeSelectAllByDoctor(int doctorSeq) throws SearchWrongException {
+
 		DoctorDto doc = hospitalDao.timeSelectAllByDoctor(doctorSeq);
 		int[][] arr = new int[3][18];
 		List<Integer>  list;
@@ -72,6 +76,7 @@ public class HospitalServiceImpl implements HospitalService {
 		
 		
 		return arr;
+
 	}
 
 	@Override
@@ -82,9 +87,13 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 
 	@Override
-	public List<ReservationDto> reserveSelectAllByPatient() throws SearchWrongException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ReservationDto> reserveSelectAllByPatient(PatientDto patientDto) throws SearchWrongException {
+		PatientDto pDto = hospitalDao.reserveSelectAllByPatient(patientDto);
+		if(pDto.getReservationDtoList() == null)
+			throw new SearchWrongException("환자 본인의 예약 내역이 존재하지 않습니다.");
+		return pDto.getReservationDtoList();
+
+
 	}
 
 	@Override
@@ -101,19 +110,14 @@ public class HospitalServiceImpl implements HospitalService {
 
 	@Override
 	public List<DiagnosisDto> diagSelectAllByPatient(PatientDto patientDto) throws SearchWrongException {
-		// TODO Auto-generated method stub
-		return null;
+		PatientDto pDto = hospitalDao.diagSelectAllByPatient(patientDto);
+		if(pDto.getDiagnosisDtoList() == null)
+			throw new SearchWrongException("환자 본인의 진료내역이 존재하지 않습니다.");
+		return pDto.getDiagnosisDtoList();
 	}
 	
 	
-	public List<ScheduleDto> test(int d) throws SearchWrongException{
-		DoctorDto doc = hospitalDao.timeSelectAllByDoctor(d);
-		
-		List<ScheduleDto> list = doc.getScheduleDtoList();
-		
-		
-
-		return list;
-	}
-
+	
 }
+
+
