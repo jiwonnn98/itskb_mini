@@ -159,10 +159,14 @@ public class MainView {
     }
 
     public static void reservationList(List<ReservationDto> reservationList) {
-        // TODO : 예약 목록 출력
+        for (ReservationDto dto : reservationList) {
+            System.out.println(dto);
+        }
     }
 
     public static void diagnosisList(List<DiagnosisDto> diagnosisList) {
-        // TODO : 진료 목록 출력
+        for (DiagnosisDto dto : diagnosisList) {
+            System.out.println(dto);
+        }
     }
 }
