@@ -57,14 +57,16 @@ public class HospitalServiceImpl implements HospitalService {
 	public void cancelReservableReserveNumber(int reservationSeq) throws DMLException {
 		int result = hospitalDao.cancleReservByReservNumber(reservationSeq);
 		if(result == 0) {
-			throw new DMLException("취소되지 않았습니다");
+			throw new DMLException("취소된 예약이 없습니다.");
 		}
 	}
 
 	@Override
 	public void updateReservation(ReservationDto reservationDto) throws DMLException {
-		// TODO Auto-generated method stub
-
+		int result = hospitalDao.updateReservByReservNumber(reservationDto);
+		if(result == 0) {
+			throw new DMLException("변경된 예약이 없습니다.");
+		}
 	}
 
 	@Override
