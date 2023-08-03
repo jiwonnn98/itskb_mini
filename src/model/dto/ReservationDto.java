@@ -5,7 +5,7 @@ public class ReservationDto {
     private String reservationDate;
     private int patientSeq;
     private int scheduleSeq;
-    private int timeblockSeq;
+    private int reservationBlockSeq;
 
     /**
      * 환자 예약 변경 시 사용
@@ -25,9 +25,9 @@ public class ReservationDto {
      * @param scheduleSeq
      * @param timeblockSeq
      */
-    public ReservationDto(int patientSeq, int scheduleSeq, int timeblockSeq) {
+    public ReservationDto(int patientSeq, int scheduleSeq, int reservationBlockSeq) {
         this(patientSeq, scheduleSeq);
-        this.timeblockSeq = timeblockSeq;
+        this.reservationBlockSeq = reservationBlockSeq;
     }
 
     /**
@@ -39,8 +39,8 @@ public class ReservationDto {
      * @param scheduleSeq
      * @param timeblockSeq
      */
-    public ReservationDto(int reservationSeq, String reservationDate, int patientSeq, int scheduleSeq, int timeblockSeq) {
-        this(patientSeq, scheduleSeq, timeblockSeq);
+    public ReservationDto(int reservationSeq, String reservationDate, int patientSeq, int scheduleSeq, int reservationBlockSeq) {
+        this(patientSeq, scheduleSeq, reservationBlockSeq);
         this.reservationSeq = reservationSeq;
         this.reservationDate = reservationDate;
     }
@@ -78,12 +78,12 @@ public class ReservationDto {
         this.scheduleSeq = scheduleSeq;
     }
 
-    public int getTimeblockSeq() {
-        return timeblockSeq;
+    public int getReservationBlockSeq() {
+        return reservationBlockSeq;
     }
 
-    public void setTimeblockSeq(int timeblockSeq) {
-        this.timeblockSeq = timeblockSeq;
+    public void setReservationBlockSeq(int reservationBlockSeq) {
+        this.reservationBlockSeq = reservationBlockSeq;
     }
 
     @Override
@@ -97,8 +97,8 @@ public class ReservationDto {
         builder.append(patientSeq);
         builder.append(", scheduleSeq=");
         builder.append(scheduleSeq);
-        builder.append(", timeblockSeq=");
-        builder.append(timeblockSeq);
+        builder.append(", reservationBlockSeq=");
+        builder.append(reservationBlockSeq);
         builder.append("]");
         return builder.toString();
     }

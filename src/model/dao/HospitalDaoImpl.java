@@ -43,9 +43,34 @@ public class HospitalDaoImpl implements HospitalDao {
 	}
 
 	@Override
-	public PatientDto reservSelectAllByPatient(PatientDto patientDto) throws SearchWrongException {
-		// TODO Auto-generated method stub
-		return null;
+	public PatientDto reserveSelectAllByPatient(PatientDto patientDto) throws SearchWrongException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql = "select * from reservation where patient_seq = ?";
+		List<ReservationDto> list = new ArrayList<>();
+		try {
+			con = DBManager.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, patientDto.getPatientSeq());
+			
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				int reservationSeq = rs.getInt("reservation_seq");
+			    String reservationDate = rs.getString("reservation_date");
+			    int patientSeq = rs.getInt("patient_seq");
+			    int scheduleSeq = rs.getInt("schedule_seq");
+			    int reservationBlockSeq = rs.getInt("reservation_block_seq");
+			    list.add(new ReservationDto(reservationSeq, reservationDate, patientSeq, scheduleSeq, reservationBlockSeq));
+			}
+			patientDto.setReservationDtoList(list);
+		} catch (SQLException e) {
+//			e.printStackTrace();
+			throw new SearchWrongException("예약 내역 검색 중 오류가 발생하였습니다.\\n다음에 이용해 주세요 ^^;;");
+		} finally {
+			DBManager.releaseConnection(con, ps, rs);
+		}
+		return patientDto;
 	}
 
 	@Override
