@@ -1,12 +1,8 @@
-package dto;
+package model.dto;
 
 public class TimeBlockDto {
 	private int timeblockSeq;
     private String timeblockTime;
-
-    // Default constructor
-    public TimeBlockDto() {
-    }
 
     // Parameterized constructor
     public TimeBlockDto(int timeblockSeq, String timeblockTime) {

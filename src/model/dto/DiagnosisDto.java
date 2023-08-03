@@ -1,15 +1,11 @@
-package dto;
+package model.dto;
 
 public class DiagnosisDto {
-	private int diagnosisSeq;
+    private int diagnosisSeq;
     private String diagnosisPrescription;
     private String diagnosisDate;
     private int patientSeq;
     private int doctorSeq;
-
-    // Default constructor
-    public DiagnosisDto() {
-    }
 
     // Parameterized constructor
     public DiagnosisDto(int diagnosisSeq, String diagnosisPrescription, String diagnosisDate, int patientSeq, int doctorSeq) {

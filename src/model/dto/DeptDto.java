@@ -1,13 +1,9 @@
-package dto;
+package model.dto;
 
 public class DeptDto {
-	private int deptCode;
+    private int deptCode;
     private String deptName;
     private String deptLoc;
-
-    // Default constructor
-    public DeptDto() {
-    }
 
     // Parameterized constructor
     public DeptDto(int deptCode, String deptName, String deptLoc) {
@@ -41,16 +37,16 @@ public class DeptDto {
         this.deptLoc = deptLoc;
     }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("DeptDto [deptCode=");
-		builder.append(deptCode);
-		builder.append(", deptName=");
-		builder.append(deptName);
-		builder.append(", deptLoc=");
-		builder.append(deptLoc);
-		builder.append("]");
-		return builder.toString();
-	}
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("DeptDto [deptCode=");
+        builder.append(deptCode);
+        builder.append(", deptName=");
+        builder.append(deptName);
+        builder.append(", deptLoc=");
+        builder.append(deptLoc);
+        builder.append("]");
+        return builder.toString();
+    }
 }

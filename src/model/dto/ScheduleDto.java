@@ -1,4 +1,4 @@
-package dto;
+package model.dto;
 
 public class ScheduleDto {
 	private int scheduleSeq;
@@ -6,10 +6,6 @@ public class ScheduleDto {
     private int startBlockSeq;
     private int endBlockSeq;
     private String scheduleDate;
-
-    // Default constructor
-    public ScheduleDto() {
-    }
 
     // Parameterized constructor
     public ScheduleDto(int scheduleSeq, int doctorSeq, int startBlockSeq, int endBlockSeq, String scheduleDate) {

@@ -1,14 +1,14 @@
-package dto;
+package model.dto;
+
+import java.util.List;
 
 public class DoctorDto {
-	private int doctorSeq;
+    private int doctorSeq;
     private String doctorSSN;
     private String doctorName;
     private int deptCode;
 
-    // Default constructor
-    public DoctorDto() {
-    }
+    List<ScheduleDto> scheduleDtoList;
 
     // Parameterized constructor
     public DoctorDto(int doctorSeq, String doctorSSN, String doctorName, int deptCode) {
@@ -51,18 +51,26 @@ public class DoctorDto {
         this.deptCode = deptCode;
     }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("DoctorDto [doctorSeq=");
-		builder.append(doctorSeq);
-		builder.append(", doctorSSN=");
-		builder.append(doctorSSN);
-		builder.append(", doctorName=");
-		builder.append(doctorName);
-		builder.append(", deptCode=");
-		builder.append(deptCode);
-		builder.append("]");
-		return builder.toString();
-	}
+    public List<ScheduleDto> getScheduleDtoList() {
+        return scheduleDtoList;
+    }
+
+    public void setScheduleDtoList(List<ScheduleDto> scheduleDtoList) {
+        this.scheduleDtoList = scheduleDtoList;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("DoctorDto [doctorSeq=");
+        builder.append(doctorSeq);
+        builder.append(", doctorSSN=");
+        builder.append(doctorSSN);
+        builder.append(", doctorName=");
+        builder.append(doctorName);
+        builder.append(", deptCode=");
+        builder.append(deptCode);
+        builder.append("]");
+        return builder.toString();
+    }
 }
