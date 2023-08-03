@@ -3,6 +3,7 @@ package view;
 import controller.HospitalController;
 import controller.PatientController;
 import model.dto.DeptDto;
+import model.dto.DiagnosisDto;
 import model.dto.DoctorDto;
 import model.dto.ReservationDto;
 import session.Session;
@@ -77,7 +78,6 @@ public class MainView {
         sessionSet.remove(session);
     }
 
-    // TODO : 로그인 성공 시 메뉴
     public static void patientMenu(int patientSeq) {
         while (true) {
             Session session = sessionSet.get(patientSeq);
@@ -112,14 +112,6 @@ public class MainView {
         }
     }
 
-    // TODO : 로그아웃
-    public static void logout(int patientSeq) {
-        Session session = sessionSet.get(patientSeq);
-
-        sessionSet.remove(session);
-    }
-
-    // TODO : 예약 하기
     public static int deptList(List<DeptDto> deptList) {
         System.out.println("부서 선택");
         for (DeptDto dto : deptList) {
@@ -166,11 +158,11 @@ public class MainView {
         return timeBlock;
     }
 
+    public static void reservationList(List<ReservationDto> reservationList) {
+        // TODO : 예약 목록 출력
+    }
 
-    // TODO : 예약 날짜 변경
-
-    // TODO : 예약 취소
-
-    // TODO : 진료 조회
-
+    public static void diagnosisList(List<DiagnosisDto> diagnosisList) {
+        // TODO : 진료 목록 출력
+    }
 }
