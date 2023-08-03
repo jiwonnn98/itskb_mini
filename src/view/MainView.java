@@ -1,15 +1,17 @@
 package view;
 
 import controller.PatientController;
+import model.dto.DeptDto;
+import model.dto.DoctorDto;
 import session.SessionSet;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class MainView {
 
     private static Scanner sc = new Scanner(System.in);
 
-    // TODO : 초기 메뉴 1. 신규 환자 | 2. 로그인 | 9. 종료
     public static void menu() {
         SessionSet sessionSet = SessionSet.getInstance();
         while (true) {
@@ -19,6 +21,7 @@ public class MainView {
             switch (menu) {
                 case 1:
                     // 신규 환자
+                    MainView.register();
                     break;
                 case 2:
                     // 로그인
@@ -32,6 +35,22 @@ public class MainView {
                     System.out.println("다시 입력하세요.");
             }
         }
+    }
+
+    private static void register() {
+        System.out.print("이름 : ");
+        String patientName = sc.nextLine();
+
+        System.out.print("주민등록번호 : ");
+        String patientSSN = sc.nextLine();
+
+        System.out.print("주소 : ");
+        String patientAddr = sc.nextLine();
+
+        System.out.print("휴대폰번호 : ");
+        String patientPhone = sc.nextLine();
+
+        PatientController.insertPatient(patientName, patientSSN, patientAddr, patientPhone);
     }
 
     private static void login() {
@@ -54,6 +73,7 @@ public class MainView {
     // TODO : 로그아웃
 
     // TODO : 예약 하기
+
 
     // TODO : 예약 조회
 
