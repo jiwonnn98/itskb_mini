@@ -47,11 +47,11 @@ public interface HospitalDao {
     /**
      * 환자 자신의 예약 취소
      *
-     * @param reservationDto
+     * @param reservationSeq
      * @return
      * @throws DMLException
      */
-    int cancleReservByReservNumber(ReservationDto reservationDto) throws DMLException;
+    int cancleReservByReservNumber(int reservationSeq) throws DMLException;
 
     /**
      * 환자 자신의 예약 변경

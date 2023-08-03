@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,9 +75,41 @@ public class HospitalDaoImpl implements HospitalDao {
 	}
 
 	@Override
-	public int cancleReservByReservNumber(ReservationDto reservationDto) throws DMLException {
-		// TODO Auto-generated method stub
-		return 0;
+	public int cancleReservByReservNumber(int reservationSeq) throws DMLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql = "select * from reservation where reservation_seq = ?";
+		try {
+			con = DBManager.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, reservationSeq);
+			
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				int today=LocalDate.now().getDayOfMonth();
+				if(Integer.parseInt(rs.getString("reservation_date").substring(8,10))- today == 0) {
+					throw new DMLException("당일 예약은 취소할 수 없습니다.");
+				}
+			}
+		} catch (SQLException e) {
+			throw new DMLException("취소 도중 오류가 발생했습니다!!");
+		}finally {
+			DBManager.releaseConnection(con, ps, rs);
+		}
+		int result = 0;
+		sql = "delete from reservation where reservation_seq = ?";
+		try {
+			con = DBManager.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, reservationSeq);
+			
+			result = ps.executeUpdate();
+		} catch (SQLException e) {
+//			e.printStackTrace();
+			throw new DMLException("삭제도중 오류가 발생했습니다.");
+		}
+		return result;
 	}
 
 	@Override
