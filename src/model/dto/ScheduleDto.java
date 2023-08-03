@@ -1,8 +1,9 @@
 package model.dto;
+import java.time.LocalDate;
 
 public class ScheduleDto {
 	private int scheduleSeq;
-    private int doctorSeq;
+    private int doctorSeq;    
     private int startBlockSeq;
     private int endBlockSeq;
     private String scheduleDate;
@@ -73,4 +74,15 @@ public class ScheduleDto {
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	public int dayGap() {
+		int day = Integer.parseInt(this.scheduleDate.substring(8,10));
+		
+		System.out.println();
+		
+		int today = LocalDate.now().getDayOfMonth();
+		
+		return day-today;
+	}
+	
 }
