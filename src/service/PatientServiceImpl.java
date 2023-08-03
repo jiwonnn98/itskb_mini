@@ -29,6 +29,6 @@ public class PatientServiceImpl  implements PatientService{
 
     @Override
     public void insertPatient(PatientDto patient) throws DMLException {
-
+        patientDao.insertPatient(patient);
     }
 }

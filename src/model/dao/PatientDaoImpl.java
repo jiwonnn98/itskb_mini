@@ -36,8 +36,31 @@ public class PatientDaoImpl implements PatientDao {
 
     }
 
+
+//    insert into PATIENT (PATIENT_SEQ , PATIENT_NAME, PATIENT_SSN , PATIENT_ADDRESS, PATIENT_PHONE )
+//     VALUES (PATIENT_auto_seq.nextval , ? ,? ,? ,?);
+
     @Override
     public void insertPatient(PatientDto patientDto) throws DMLException {
+        Connection con = null;
+        PreparedStatement ps = null;
+        String sql = "insert into PATIENT (PATIENT_SEQ , PATIENT_NAME, PATIENT_SSN , PATIENT_ADDRESS, PATIENT_PHONE ) "
+                + "VALUES (PATIENT_auto_seq.nextval , ? ,? ,? ,?)";
+        int result = 0;
+        try {
+            con = DBManager.getConnection();
+            ps = con.prepareStatement(sql);
 
+            ps.setString(1, patientDto.getPatientName());
+            ps.setString(2, patientDto.getPatientSSN());
+            ps.setString(3, patientDto.getPatientAddr());
+            ps.setString(4, patientDto.getPatientPhone());
+
+            result = ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DMLException("회원 등록 실패 다시 시도하세용");
+        }finally {
+            DBManager.releaseConnection(con, ps);
+        }
     }
 }

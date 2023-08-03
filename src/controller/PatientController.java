@@ -23,4 +23,17 @@ public class PatientController {
             //FailView.errorMessage(e.getMessage());
         }
     }
+    /**
+     * 환자 등록
+     */
+    public static void insertPatient(String patientName , String patientSSN , String patientAddr ,String patientPhone ){
+        try {
+            PatientDto patientDto = new PatientDto(patientName, patientSSN, patientAddr, patientPhone);
+            patientService.insertPatient(patientDto);
+        } catch (Exception e) {
+            //FailView.errorMessage(e.getMessage());
+        }
+
+    }
+
 }
