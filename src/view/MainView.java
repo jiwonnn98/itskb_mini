@@ -1,8 +1,11 @@
 package view;
 
+import controller.HospitalController;
 import controller.PatientController;
 import model.dto.DeptDto;
 import model.dto.DoctorDto;
+import model.dto.ReservationDto;
+import session.Session;
 import session.SessionSet;
 
 import java.util.List;
@@ -11,9 +14,9 @@ import java.util.Scanner;
 public class MainView {
 
     private static Scanner sc = new Scanner(System.in);
+    private static SessionSet sessionSet = SessionSet.getInstance();
 
     public static void menu() {
-        SessionSet sessionSet = SessionSet.getInstance();
         while (true) {
 
             MainView.startMenu();
@@ -68,14 +71,95 @@ public class MainView {
         System.out.println("1. 신규 환자 | 2. 로그인 | 9. 종료");
     }
 
-    // TODO : 로그인 성공 시 메뉴 1. 로그아웃 | 2. 예약 하기 | 3. 예약 조회 | 4. 예약 날짜 변경 | 5. 예약 취소 | 6. 진료 조회
+    // TODO : 로그인 성공 시 메뉴
+    public static void patientMenu(int patientSeq) {
+        while (true) {
+            Session session = sessionSet.get(patientSeq);
+            String patientName = session.getPatientName();
+
+            System.out.println(patientName + "님. 메뉴를 선택해 주세요. ");
+            System.out.println("1. 로그아웃 | 2. 예약 하기 | 3. 예약 조회 | 4. 예약 날짜 변경 | 5. 예약 취소 | 6. 진료 조회");
+
+            int menu = Integer.parseInt(sc.nextLine());
+            switch (menu) {
+                case 1:
+                    logout(patientSeq);
+                    return;
+                case 2:
+                    HospitalController.reservationInsert();
+                    break;
+                case 3:
+                    // TODO 예약 조회
+                    break;
+                case 4:
+                    // TODO 예약 날짜 변경
+                    break;
+                case 5:
+                    // TODO 예약 취소
+                    break;
+                case 6:
+                    // TODO 진료 조회
+                    break;
+                default:
+                    System.out.println("보기에서 메뉴를 선택해 주세요. ");
+            }
+        }
+    }
 
     // TODO : 로그아웃
+    public static void logout(int patientSeq) {
+        Session session = sessionSet.get(patientSeq);
+
+        sessionSet.remove(session);
+    }
 
     // TODO : 예약 하기
+    public static int deptList(List<DeptDto> deptList) {
+        System.out.println("부서 선택");
+        for (DeptDto dto : deptList) {
+            System.out.println(dto);
+        }
 
+        System.out.print("부서 번호를 입력하세요. 예약을 그만두려면 -1을 입력하세요. ");
+        int dept = Integer.parseInt(sc.nextLine());
 
-    // TODO : 예약 조회
+        return dept;
+    }
+
+    public static int doctorTimeList(List<DoctorDto> doctorList) {
+        System.out.println("의사 선택");
+        for (DoctorDto dto : doctorList) {
+            System.out.println(dto);
+        }
+
+        System.out.println("의사 번호 입력. 예약 그만두려면 -1");
+        int doctor = Integer.parseInt(sc.nextLine());
+
+        return doctor;
+    }
+
+    public static int reservationTimeArray(int[][] availableTimeArray) {
+        System.out.println("가능한 시간 선택");
+        int ROW = availableTimeArray.length;
+        int COL = availableTimeArray[0].length;
+
+        for (int day = 0; day < ROW; day++) {
+            for (int time = 0; time < COL; time++) {
+                System.out.printf("%5d", availableTimeArray[day][time]);
+            }
+            System.out.println();
+        }
+
+        System.out.print("날짜를 선택해 주세요. (오늘 0, 내일 1, 모레 2) : ");
+        int day = Integer.parseInt(sc.nextLine());
+        System.out.print("시간을 선택해 주세요. : ");
+        int time = Integer.parseInt(sc.nextLine());
+
+        int timeBlock = availableTimeArray[day][time];
+
+        return timeBlock;
+    }
+
 
     // TODO : 예약 날짜 변경
 
