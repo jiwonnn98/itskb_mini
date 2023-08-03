@@ -19,10 +19,10 @@ public class MainView {
             switch (menu) {
                 case 1:
                     // 신규 환자
-                    MainView.login();
                     break;
                 case 2:
                     // 로그인
+                    MainView.login();
                     break;
                 case 9:
                     // 종료
