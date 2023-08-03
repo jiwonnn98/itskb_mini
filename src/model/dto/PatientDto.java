@@ -10,7 +10,7 @@ public class PatientDto {
     private String patientPhone;
 
     List<ReservationDto> reservationDtoList;
-    List<ScheduleDto> scheduleDtoList;
+    List<DiagnosisDto> diagnosisDtoList;
 
     /**
      * 환자 번호로 예약, 진료 내역 조회 시 사용
@@ -90,12 +90,12 @@ public class PatientDto {
         this.reservationDtoList = reservationDtoList;
     }
 
-    public List<ScheduleDto> getScheduleDtoList() {
-        return scheduleDtoList;
+    public List<DiagnosisDto> getDiagnosisDtoList() {
+        return diagnosisDtoList;
     }
 
-    public void setScheduleDtoList(List<ScheduleDto> scheduleDtoList) {
-        this.scheduleDtoList = scheduleDtoList;
+    public void setDiagnosisDtoList(List<DiagnosisDto> diagnosisDtoList) {
+        this.diagnosisDtoList = diagnosisDtoList;
     }
 
     @Override

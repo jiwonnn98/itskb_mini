@@ -56,4 +56,21 @@ public class DiagnosisDto {
     public void setDoctorSeq(int doctorSeq) {
         this.doctorSeq = doctorSeq;
     }
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("DiagnosisDto [diagnosisSeq=");
+		builder.append(diagnosisSeq);
+		builder.append(", diagnosisPrescription=");
+		builder.append(diagnosisPrescription);
+		builder.append(", diagnosisDate=");
+		builder.append(diagnosisDate);
+		builder.append(", patientSeq=");
+		builder.append(patientSeq);
+		builder.append(", doctorSeq=");
+		builder.append(doctorSeq);
+		builder.append("]");
+		return builder.toString();
+	}
 }
