@@ -8,6 +8,7 @@ import service.PatientServiceImpl;
 import session.Session;
 import session.SessionSet;
 import view.FailView;
+import view.MainView;
 
 public class PatientController {
     static PatientService patientService = new PatientServiceImpl();
@@ -19,7 +20,7 @@ public class PatientController {
         try {
             PatientDto patientDto = new PatientDto(patientName, patientSSN);
             Session session = patientService.login(patientDto);
-            //MenuView.printUserMenu(patientName);
+            MainView.patientMenu(session.getPatientSeq());
         } catch (Exception e) {
             FailView.errorMessage(e.getMessage());
         }
@@ -35,7 +36,6 @@ public class PatientController {
         } catch (Exception e) {
             FailView.errorMessage(e.getMessage());
         }
-
     }
 
 }
