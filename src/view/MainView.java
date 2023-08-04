@@ -8,6 +8,7 @@ import controller.HospitalController;
 import controller.PatientController;
 import model.dto.DeptDto;
 import model.dto.DoctorDto;
+import model.dto.ReservationDto;
 import session.Session;
 import session.SessionSet;
 
@@ -105,22 +106,31 @@ public class MainView {
                    int[] selectTime = reservationTimeArray(timeArr);
    
                    HospitalController.reservation(selectTime[0], selectTime[1], patientSeq, timeArr[selectTime[0]][0]);
-                     
-                   
-                    break;
+                   break;
                 case 3: // 예약 조회
-                	HospitalController.reservationList();
+                	HospitalController.reservationList(patientSeq);
                     break;
-                case 4:
-                    // TODO HospitalController.reservationModifyDate();
+                case 4: // 예약 변경
+                	HospitalController.reservationList(patientSeq);
+                	int reservSeq = reservationSeqUpdate();
+                	List<DeptDto> deptListUpdate = HospitalController.deptList();
+                    int deptSeqUpdate = deptList(deptListUpdate);
+                    if(deptSeqUpdate == -1) break;
+                    List<DoctorDto> docListUpdate = HospitalController.docList(deptSeqUpdate);
+                    int doctorSeqUpdate = doctorTimeList(docListUpdate);
+                    if(doctorSeqUpdate == -1) break;
+                    int[][] timeArrUpdate = HospitalController.timeList(doctorSeqUpdate);
+                    int[] selectTimeUpdate = reservationTimeArray(timeArrUpdate);
+                	ReservationDto reserv = new ReservationDto(reservSeq, LocalDate.now().plusDays(selectTimeUpdate[0]).toString(), patientSeq, timeArrUpdate[selectTimeUpdate[0]][0], selectTimeUpdate[1]);
+                	HospitalController.reservationModifyDate(reserv);
                     break;
                 case 5: // 예약 취소
-                	HospitalController.reservationList();
-                	int blockSeq = reservationBlockSeq();
-                	HospitalController.reservationCancel(blockSeq);
+                	HospitalController.reservationList(patientSeq);
+                	int reserveSeq = reservationSeq();
+                	HospitalController.reservationCancel(reserveSeq);
                     break;
                 case 6: // 진료조회
-                	HospitalController.diagnosisList();
+                	HospitalController.diagnosisList(patientSeq);
                     break;
                 default:
                     System.out.println("보기에서 메뉴를 선택해 주세요. ");
@@ -175,8 +185,14 @@ public class MainView {
         return timeBlock;
     }
     
-    public static int reservationBlockSeq() {
+    public static int reservationSeq() {
     	System.out.println("취소할 예약 번호 입력");
+    	int num = Integer.parseInt(sc.nextLine());
+    	return num;
+    }
+    
+    public static int reservationSeqUpdate() {
+    	System.out.println("변경할 예약 번호 입력");
     	int num = Integer.parseInt(sc.nextLine());
     	return num;
     }
