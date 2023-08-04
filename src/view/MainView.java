@@ -108,17 +108,19 @@ public class MainView {
                      
                    
                     break;
-                case 3:
-                    // TODO HospitalController.reservationList();
+                case 3: // 예약 조회
+                	HospitalController.reservationList();
                     break;
                 case 4:
                     // TODO HospitalController.reservationModifyDate();
                     break;
-                case 5:
-                    // TODO HospitalController.reservationCancel();
+                case 5: // 예약 취소
+                	HospitalController.reservationList();
+                	int blockSeq = reservationBlockSeq();
+                	HospitalController.reservationCancel(blockSeq);
                     break;
-                case 6:
-                    // TODO HospitalController.diagnosisList();
+                case 6: // 진료조회
+                	HospitalController.diagnosisList();
                     break;
                 default:
                     System.out.println("보기에서 메뉴를 선택해 주세요. ");
@@ -171,5 +173,11 @@ public class MainView {
         timeBlock[1] = Integer.parseInt(sc.nextLine());
 
         return timeBlock;
+    }
+    
+    public static int reservationBlockSeq() {
+    	System.out.println("취소할 예약 번호 입력");
+    	int num = Integer.parseInt(sc.nextLine());
+    	return num;
     }
 }

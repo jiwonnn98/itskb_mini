@@ -45,7 +45,7 @@ public class PatientDaoImpl implements PatientDao {
         Connection con = null;
         PreparedStatement ps = null;
         String sql = "insert into PATIENT (PATIENT_SEQ , PATIENT_NAME, PATIENT_SSN , PATIENT_ADDRESS, PATIENT_PHONE ) "
-                + "VALUES (PATIENT_auto_seq.nextval , ? ,? ,? ,?)";
+                + "VALUES (PATIENT_SEQ.nextval , ? ,? ,? ,?)";
         int result = 0;
         try {
             con = DBManager.getConnection();
