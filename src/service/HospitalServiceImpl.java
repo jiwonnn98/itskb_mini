@@ -32,7 +32,6 @@ public class HospitalServiceImpl implements HospitalService {
 		}
 		
 		return list;
-
 	}
 
 	@Override
@@ -77,7 +76,6 @@ public class HospitalServiceImpl implements HospitalService {
 		
 		
 		return arr;
-
 	}
 
 	@Override
@@ -120,9 +118,6 @@ public class HospitalServiceImpl implements HospitalService {
 			throw new SearchWrongException("환자 본인의 진료내역이 존재하지 않습니다.");
 		return pDto.getDiagnosisDtoList();
 	}
-	
-	
-	
 }
 
 

@@ -84,7 +84,9 @@ public class MainView {
             Session session = sessionSet.get(patientSeq);
             String patientName = session.getPatientName();
 
+            System.out.println();
             System.out.println(patientName + "님. 메뉴를 선택해 주세요. ");
+
             System.out.println("============================== Menu ==============================");
             System.out.println("1. 로그아웃 | 2. 예약 하기 | 3. 예약 조회");
             System.out.println("4. 예약 날짜 변경 | 5. 예약 취소 | 6. 진료 조회");
@@ -96,104 +98,163 @@ public class MainView {
                     logout(patientSeq);
                     return;
                 case 2:
-                   List<DeptDto> deptList = HospitalController.deptList();
-                   int deptSeq = deptList(deptList);
-                   if(deptSeq == -1) break;
-                   List<DoctorDto> docList = HospitalController.docList(deptSeq);
-                   int doctorSeq = doctorTimeList(docList);
-                   if(doctorSeq == -1) break;
-                   int[][] timeArr = HospitalController.timeList(doctorSeq);
-                   int[] selectTime = reservationTimeArray(timeArr);
-   
-                   HospitalController.reservation(selectTime[0], selectTime[1], patientSeq, timeArr[selectTime[0]][0]);
-                   break;
+                    List<DeptDto> deptList = HospitalController.deptList();
+                    int deptSeq = deptList(deptList);
+                    if (deptSeq == -1) {
+                        System.out.println("예약을 중단합니다. ");
+                        break;
+                    }
+                    List<DoctorDto> docList = HospitalController.docList(deptSeq);
+                    int doctorSeq = doctorTimeList(docList);
+                    if (doctorSeq == -1) {
+                        System.out.println("예약을 중단합니다. ");
+                        break;
+                    }
+                    int[][] timeArr = HospitalController.timeList(doctorSeq);
+                    int[] selectTime = reservationTimeArray(timeArr);
+                    if (selectTime[0] == -1 || selectTime[1] == -1) {
+                        System.out.println("예약을 중단합니다. ");
+                        break;
+                    }
+                    HospitalController.reservation(selectTime[0], selectTime[1], patientSeq, timeArr[selectTime[0]][0]);
+                    break;
                 case 3: // 예약 조회
-                	HospitalController.reservationList(patientSeq);
+                    HospitalController.reservationList(patientSeq);
                     break;
                 case 4: // 예약 변경
-                	HospitalController.reservationList(patientSeq);
-                	int reservSeq = reservationSeqUpdate();
-                	List<DeptDto> deptListUpdate = HospitalController.deptList();
+                    HospitalController.reservationList(patientSeq);
+                    int reservSeq = reservationSeqUpdate();
+                    List<DeptDto> deptListUpdate = HospitalController.deptList();
                     int deptSeqUpdate = deptList(deptListUpdate);
-                    if(deptSeqUpdate == -1) break;
+                    if (deptSeqUpdate == -1) {
+                        System.out.println("예약 변경을 중단합니다. ");
+                        break;
+                    }
                     List<DoctorDto> docListUpdate = HospitalController.docList(deptSeqUpdate);
                     int doctorSeqUpdate = doctorTimeList(docListUpdate);
-                    if(doctorSeqUpdate == -1) break;
+                    if (doctorSeqUpdate == -1) {
+                        System.out.println("예약 변경을 중단합니다. ");
+                        break;
+                    }
                     int[][] timeArrUpdate = HospitalController.timeList(doctorSeqUpdate);
                     int[] selectTimeUpdate = reservationTimeArray(timeArrUpdate);
-                	ReservationDto reserv = new ReservationDto(reservSeq, LocalDate.now().plusDays(selectTimeUpdate[0]).toString(), patientSeq, timeArrUpdate[selectTimeUpdate[0]][0], selectTimeUpdate[1]);
-                	HospitalController.reservationModifyDate(reserv);
+                    if (selectTimeUpdate[0] == -1 || selectTimeUpdate[1] == -1) {
+                        System.out.println("예약 변경을 중단합니다. ");
+                        break;
+                    }
+                    ReservationDto reserv = new ReservationDto(reservSeq, LocalDate.now().plusDays(selectTimeUpdate[0]).toString(), patientSeq, timeArrUpdate[selectTimeUpdate[0]][0], selectTimeUpdate[1]);
+                    HospitalController.reservationModifyDate(reserv);
                     break;
                 case 5: // 예약 취소
-                	HospitalController.reservationList(patientSeq);
-                	int reserveSeq = reservationSeq();
-                	HospitalController.reservationCancel(reserveSeq);
+                    HospitalController.reservationList(patientSeq);
+                    int reserveSeq = reservationSeq();
+                    HospitalController.reservationCancel(reserveSeq);
                     break;
-                case 6: // 진료조회
-                	HospitalController.diagnosisList(patientSeq);
+                case 6: // 진료 조회
+                    HospitalController.diagnosisList(patientSeq);
                     break;
                 default:
                     System.out.println("보기에서 메뉴를 선택해 주세요. ");
             }
         }
     }
-    
+
 
     public static int deptList(List<DeptDto> deptList) {
-        System.out.println("부서 선택");
+        System.out.println();
+        System.out.println("--------------- 부서 선택창 --------------------");
+
+        System.out.println("+--------------+--------------------------------+");
+        System.out.printf("| %-2 | %-30s |\n", "부서 번호", "부서 이름");
+        System.out.println("+--------------+--------------------------------+");
+
         for (DeptDto dto : deptList) {
-            System.out.println(dto);
+            System.out.printf("| %-12s | %-30s |\n", dto.getDeptCode(), dto.getDeptName());
         }
 
-        System.out.print("부서 번호를 입력하세요. 예약을 그만두려면 -1을 입력하세요. ");
+        System.out.println("+--------------+--------------------------------+");
+
+        System.out.print("부서 번호를 입력하세요. 예약을 그만두려면 -1을 입력하세요. : ");
         int dept = Integer.parseInt(sc.nextLine());
 
         return dept;
     }
 
     public static int doctorTimeList(List<DoctorDto> doctorList) {
-        System.out.println("의사 선택");
+        System.out.println();
+        System.out.println("--------------- 의사 선택창 --------------------");
+
+        System.out.println("+--------------+--------------------------------+");
+        System.out.printf("| %-12s | %-30s |\n", "의사 번호", "의사 이름");
+        System.out.println("+--------------+--------------------------------+");
+
         for (DoctorDto dto : doctorList) {
-            System.out.println(dto);
+            System.out.printf("| %-12s | %-30s |\n", dto.getDoctorSeq(), dto.getDoctorName());
         }
 
-        System.out.println("의사 번호 입력. 예약 그만두려면 -1");
+        System.out.println("+--------------+--------------------------------+");
+
+        System.out.print("의사 번호 입력하세요. 예약 그만두려면 -1을 입력하세요. : ");
         int doctor = Integer.parseInt(sc.nextLine());
 
         return doctor;
     }
 
     public static int[] reservationTimeArray(int[][] availableTimeArray) {
-        System.out.println("가능한 시간 선택");
-        int ROW = availableTimeArray.length;
-        int COL = availableTimeArray[0].length;
-        int[] timeBlock= new int[2];
+        int ROW = 3;
+        int COL = 19;
+        int[] timeBlock = new int[2];
 
-        for (int day = 0; day < ROW; day++) {
-            for (int time = 0; time < COL; time++) {
-                System.out.printf("%5d", availableTimeArray[day][time]);
+        System.out.println();
+        System.out.println("--- 시간 선택 (■ : 선택 가능, □ : 선택 불가능) ---");
+        System.out.print("    ");
+        for (int col = 1; col < 19; col++) {
+            int hours = (col + 17) / 2;
+            int minutes = ((col + 17) % 2) * 30;
+            System.out.printf("%02d:%02d ", hours, minutes);
+        }
+        System.out.println();
+        System.out.print("\t");
+        for (int col = 1; col < COL; col++) {
+            System.out.printf("%-6d", col);
+        }
+        System.out.println();
+
+        for (int row = 0; row < ROW; row++) {
+            System.out.printf("%-3d ", row);
+
+            for (int col = 1; col < COL; col++) {
+                if (availableTimeArray[row][col] >= 0) {
+                    // 선택 가능
+                    System.out.printf("%-6s", "■");
+                } else {
+                    // 선택 불가능
+                    System.out.printf("%-6s", "□");
+                }
             }
             System.out.println();
         }
+        System.out.println("--------------------------------------------------");
 
+        System.out.println("예약을 중단하시려면 -1을 입력해주세요. ");
         System.out.print("날짜를 선택해 주세요. (오늘 0, 내일 1, 모레 2) : ");
         timeBlock[0] = Integer.parseInt(sc.nextLine());
-        System.out.print("시간을 선택해 주세요. : ");
 
+        System.out.print("시간을 선택해 주세요. : ");
         timeBlock[1] = Integer.parseInt(sc.nextLine());
 
         return timeBlock;
     }
-    
+
     public static int reservationSeq() {
-    	System.out.println("취소할 예약 번호 입력");
-    	int num = Integer.parseInt(sc.nextLine());
-    	return num;
+        System.out.print("취소할 예약 번호 입력 : ");
+        int num = Integer.parseInt(sc.nextLine());
+        return num;
     }
-    
+
     public static int reservationSeqUpdate() {
-    	System.out.println("변경할 예약 번호 입력");
-    	int num = Integer.parseInt(sc.nextLine());
-    	return num;
+        System.out.print("변경할 예약 번호 입력 : ");
+        int num = Integer.parseInt(sc.nextLine());
+        return num;
     }
 }
