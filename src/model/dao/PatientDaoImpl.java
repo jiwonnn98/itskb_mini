@@ -28,7 +28,7 @@ public class PatientDaoImpl implements PatientDao {
                 patientDto.setPatientSeq(rs.getInt(1));
             }
         } catch (SQLException e) {
-            throw new SessionException("다시 로그인 시도하십쇼.");
+            throw new SessionException("로그인을 다시 시도해주세요.");
         }finally {
             DBManager.releaseConnection(con, ps, rs);
         }
@@ -58,7 +58,7 @@ public class PatientDaoImpl implements PatientDao {
 
             result = ps.executeUpdate();
         } catch (SQLException e) {
-            throw new DMLException("회원 등록 실패 다시 시도하세용");
+            throw new DMLException("회원 등록에 실패했습니다. 다시 시도하세요.");
         }finally {
             DBManager.releaseConnection(con, ps);
         }

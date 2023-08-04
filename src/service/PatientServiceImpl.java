@@ -14,10 +14,10 @@ public class PatientServiceImpl  implements PatientService{
     public Session login(PatientDto patientDto ) throws SessionException {
         PatientDto result = patientDao.login(patientDto);
         if (result == null) {
-            throw new SessionException("정보를 다시 입력해라."); // result 가 비어있다.
+            throw new SessionException("이름과 주민번호를 확인해주세요."); // result 가 비어있다.
         }
         if (result.getPatientSeq() < 0) {
-            throw new SessionException("정보를 다시 입력해라"); // setPatientSeq()가 되지 않았다.
+            throw new SessionException("로그인에 실패했습니다. \n잠시 후 다시 시도해주세요."); // setPatientSeq()가 되지 않았다.
         }
         //로그인 정보 저장
         Session session = new Session(result.getPatientSeq(), result.getPatientName());

@@ -251,7 +251,7 @@ public class HospitalDaoImpl implements HospitalDao {
 			}
 			patientDto.setDiagnosisDtoList(list);
 		} catch (SQLException e) {
-			throw new SearchWrongException("진료 내역 검색 중 오류가 발생하였습니다.\n다음에 이용해 주세요 ^^;;");
+			throw new SearchWrongException("진료 내역 검색 중 오류가 발생하였으니 다시 시도해주세요. ");
 		} finally {
 			DBManager.releaseConnection(con, ps, rs);
 		}
@@ -285,7 +285,7 @@ public class HospitalDaoImpl implements HospitalDao {
 			}
 			
 		}catch(SQLException e) {
-			throw new SearchWrongException("의사 에약 잘못 찾았음");
+			throw new SearchWrongException("의사 목록을 불러오는데 실패하였습니다. ");
 		}finally {
 			DBManager.releaseConnection(con, ps, rs);
 		}
@@ -318,8 +318,7 @@ public class HospitalDaoImpl implements HospitalDao {
 				}
 			}
 		} catch (SQLException e) {
-//			e.printStackTrace();
-			throw new DMLException("취소 및 변경 도중 오류가 발생했습니다!!");
+			throw new DMLException("취소 및 변경 도중 오류가 발생했습니다.");
 		}finally {
 			DBManager.releaseConnection(null, ps, rs);
 		}
@@ -352,7 +351,7 @@ public class HospitalDaoImpl implements HospitalDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DMLException("변경 도중 오류가 발생했습니다!!");
+			throw new DMLException("변경 도중 오류가 발생했습니다.");
 		} finally {
 			DBManager.releaseConnection(null, ps, rs);
 		}
