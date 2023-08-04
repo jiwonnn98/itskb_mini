@@ -76,10 +76,7 @@ public class ScheduleDto {
 	}
 	
 	public int dayGap() {
-		int day = Integer.parseInt(this.scheduleDate.substring(8,10));
-		
-		System.out.println();
-		
+		int day = Integer.parseInt(this.scheduleDate.substring(8,10));		
 		int today = LocalDate.now().getDayOfMonth();
 		
 		return day-today;

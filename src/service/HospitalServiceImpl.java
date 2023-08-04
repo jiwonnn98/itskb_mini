@@ -49,7 +49,7 @@ public class HospitalServiceImpl implements HospitalService {
 	public int[][] timeSelectAllByDoctor(int doctorSeq) throws SearchWrongException {
 
 		DoctorDto doc = hospitalDao.timeSelectAllByDoctor(doctorSeq);
-		int[][] arr = new int[3][18];
+		int[][] arr = new int[3][19];
 		List<Integer>  list;
 		for(int i=0;i<3;i++) {
 			for(int j=0;j<18;j++) {
@@ -61,14 +61,15 @@ public class HospitalServiceImpl implements HospitalService {
 		}
 		for(ScheduleDto s : doc.getScheduleDtoList()) {
 			if(s.dayGap()<3 && s.dayGap()>=0) {
+				arr[s.dayGap()][0] = s.getScheduleSeq();
 				for(int i=s.getStartBlockSeq();i<=s.getEndBlockSeq();i++) {
-					arr[s.dayGap()][i] = i;
+					arr[s.dayGap()][i+1] = i;
 					
 				}
 				list = hospitalDao.selectReservationByDoctor(s.getScheduleSeq());
 				
 				for(int i : list) {
-					arr[s.dayGap()][i] = -1;
+					arr[s.dayGap()][i+1] = -1;
 				}
 			
 			}
