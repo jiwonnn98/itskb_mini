@@ -73,6 +73,7 @@ public class HospitalController {
 		}catch(DMLException e ) {
 			System.out.println(e.getMessage());
 		}
+	}
 
 	/**
 	 * 환자 진료 내역 조회

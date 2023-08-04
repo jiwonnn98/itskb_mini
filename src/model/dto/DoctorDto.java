@@ -64,15 +64,12 @@ public class DoctorDto {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("DoctorDto [doctorSeq=");
-        builder.append(doctorSeq);
-        builder.append(", doctorSSN=");
-        builder.append(doctorSSN);
-        builder.append(", doctorName=");
+        builder.append("[");
         builder.append(doctorName);
-        builder.append(", deptCode=");
-        builder.append(deptCode);
-        builder.append("]");
+        builder.append("(");
+        builder.append(doctorSeq);
+        builder.append(")]");
+ 
         return builder.toString();
     }
 }

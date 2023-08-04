@@ -40,13 +40,11 @@ public class DeptDto {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("DeptDto [deptCode=");
-        builder.append(deptCode);
-        builder.append(", deptName=");
+        builder.append("[");
         builder.append(deptName);
-        builder.append(", deptLoc=");
-        builder.append(deptLoc);
-        builder.append("]");
+        builder.append("(");
+        builder.append(deptCode);
+        builder.append(")]");
         return builder.toString();
     }
 }
