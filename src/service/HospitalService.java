@@ -11,7 +11,7 @@ public interface HospitalService {
     /**
      * 모든 진료과 검색
      *
-     * @return
+     * @return DeptDto List 진료과 정보들이 담긴 리스트
      * @throws SearchWrongException
      */
     List<DeptDto> deptSelectAll() throws SearchWrongException;
@@ -30,13 +30,14 @@ public interface HospitalService {
      *
      * @param doctorSeq 의사 식별번호
      * @return 일하지 않는 시간에는 -1, 일하는 시간에는 근무 식별번호가 배열에 들어 있다.
+     * @throws SearchWrongException
      */
     int[][] timeSelectAllByDoctor(int doctorSeq) throws SearchWrongException;
 
     /**
      * 환자 자신의 예약 생성
      *
-     * @param reservationDto
+     * @param reservationDto 예약 정보
      * @throws DMLException
      */
     void insertReservation(ReservationDto reservationDto) throws DMLException;
@@ -44,7 +45,8 @@ public interface HospitalService {
     /**
      * 환자 자신의 예약 내역 조회
      *
-     * @return
+     * @param patientDto 환자정보
+     * @return 전달된 patient_seq에 해당하는 예약 정보가 담긴 ReservationDto List가 반환
      * @throws SearchWrongException
      */
     List<ReservationDto> reserveSelectAllByPatient(PatientDto patientDto) throws SearchWrongException;
@@ -52,14 +54,15 @@ public interface HospitalService {
     /**
      * 환자 자신의 예약 취소
      *
-     * @param reservationSeq
+     * @param reservationSeq 예약 식별 번호
+     * @throw DMLException
      */
     void cancelReservableReserveNumber(int reservationSeq) throws DMLException;
 
     /**
      * 환자 자신의 예약 변경
      *
-     * @param reservationDto
+     * @param reservationDto 예약 정보
      * @throws DMLException
      */
     void updateReservation(ReservationDto reservationDto) throws DMLException;

@@ -8,9 +8,10 @@ import session.Session;
 public interface PatientService {
 
     /**
-     * 환자 로그인
+     *  환자 로그인
      *
      * @param patientDto 환자 정보
+     * @return Session 세션
      * @throws SessionException
      */
     Session login(PatientDto patientDto) throws SessionException;
