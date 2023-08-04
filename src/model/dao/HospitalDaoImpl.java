@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -172,15 +173,60 @@ public class HospitalDaoImpl implements HospitalDao {
 	}
 
 	@Override
-	public int cancleReservByReservNumber(ReservationDto reservationDto) throws DMLException {
-		// TODO Auto-generated method stub
-		return 0;
+	public int cancleReservByReservNumber(int reservationSeq) throws DMLException {
+		Connection con = null;
+					
+		this.checkdateReserv(con, reservationSeq);
+		
+		PreparedStatement ps = null;
+		String sql = "delete from reservation where reservation_seq = ?";
+		int result = 0;
+		try {
+			con = DBManager.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, reservationSeq);
+			result = ps.executeUpdate();
+			System.out.println("result = " + result);
+		} catch (SQLException e) {
+//			e.printStackTrace();
+			throw new DMLException("취소 도중 오류가 발생하였으니 다음에 다시 시도해 주세요.");
+		} finally {
+			DBManager.releaseConnection(con, ps);
+		}
+		return result;
 	}
 
 	@Override
 	public int updateReservByReservNumber(ReservationDto reservationDto) throws DMLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con = null;
+		int result = 0;
+		int reservationSeq = reservationDto.getReservationSeq();
+		int scheduleSeq = reservationDto.getScheduleSeq();
+		
+		checkdateReserv(con, reservationSeq);
+		
+		String updateDate = checkdateSchedule(con, scheduleSeq);
+		
+		PreparedStatement ps = null;
+		String sql = "update reservation "
+				+ "set reservation_date = TO_DATE(?, 'YYYY-MM-DD'), schedule_seq = ?, reservation_block_seq = ? "
+				+ "where reservation_seq = ?";
+		try {
+			con = DBManager.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, updateDate.substring(0, 10));
+			ps.setInt(2, scheduleSeq);
+			ps.setInt(3, reservationDto.getReservationBlockSeq());
+			ps.setInt(4, reservationSeq);
+			
+			result = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DMLException("변경 도중 오류가 발생했으니 다시 시도해 주십시오.");
+		} finally {
+			DBManager.releaseConnection(con, ps);
+		}
+		return result;
 	}
 
 	@Override
@@ -251,4 +297,67 @@ public class HospitalDaoImpl implements HospitalDao {
 	
 	
 
+	/**
+	 * 당일예약을 취소하거나 변경하려는지 확인
+	 * @param con
+	 * @param reservationSeq
+	 * @throws DMLException
+	 */
+	public void checkdateReserv(Connection con, int reservationSeq) throws DMLException{
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql = "select * from reservation where reservation_seq = ?";
+		try {
+			con = DBManager.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, reservationSeq);
+			
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				int today=LocalDate.now().getDayOfMonth();
+				if(Integer.parseInt(rs.getString("reservation_date").substring(8,10))- today == 0) {
+					throw new DMLException("당일예약은 취소 및 변경이 어렵습니다.");
+				}
+			}
+		} catch (SQLException e) {
+//			e.printStackTrace();
+			throw new DMLException("취소 및 변경 도중 오류가 발생했습니다!!");
+		}finally {
+			DBManager.releaseConnection(null, ps, rs);
+		}
+	}
+	
+	/**
+	 * 당일로 예약을 변경하려는지 확인
+	 * @param con
+	 * @param scheduleSeq
+	 * @return
+	 * @throws DMLException
+	 */
+	public String checkdateSchedule(Connection con, int scheduleSeq) throws DMLException{
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql = "select * from schedule where schedule_seq = ?";
+		String result = null;
+		try {
+			con = DBManager.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, scheduleSeq);
+			
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				int today=LocalDate.now().getDayOfMonth();
+				result = rs.getString("schedule_date");
+				if(Integer.parseInt(result.substring(8,10))- today == 0) {
+					throw new DMLException("당일로 변경은 어렵습니다.");
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DMLException("변경 도중 오류가 발생했습니다!!");
+		} finally {
+			DBManager.releaseConnection(null, ps, rs);
+		}
+		return result;
+	}
 }
