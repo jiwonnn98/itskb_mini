@@ -33,7 +33,7 @@ public class MainView {
                     break;
                 case 9:
                     // 종료
-                    System.out.println("==================== 프로그램을 종료합니다. ====================");
+                    System.out.println("===================== 프로그램을 종료합니다. ====================");
                     System.exit(0);
                 default:
                     System.out.println("다시 입력하세요.");
@@ -42,8 +42,9 @@ public class MainView {
     }
 
     private static void startMenu() {
-        System.out.println("시작메뉴");
+        System.out.println("==================== KB 종합 병원 예약 시스템 ====================");
         System.out.println("1. 신규 환자 | 2. 로그인 | 9. 종료");
+        System.out.println("==================================================================");
     }
 
     private static void register() {
@@ -84,7 +85,10 @@ public class MainView {
             String patientName = session.getPatientName();
 
             System.out.println(patientName + "님. 메뉴를 선택해 주세요. ");
-            System.out.println("1. 로그아웃 | 2. 예약 하기 | 3. 예약 조회 | 4. 예약 날짜 변경 | 5. 예약 취소 | 6. 진료 조회");
+            System.out.println("============================== Menu ==============================");
+            System.out.println("1. 로그아웃 | 2. 예약 하기 | 3. 예약 조회");
+            System.out.println("4. 예약 날짜 변경 | 5. 예약 취소 | 6. 진료 조회");
+            System.out.println("==================================================================");
 
             int menu = Integer.parseInt(sc.nextLine());
             switch (menu) {
@@ -156,17 +160,5 @@ public class MainView {
         int timeBlock = availableTimeArray[day][time];
 
         return timeBlock;
-    }
-
-    public static void reservationList(List<ReservationDto> reservationList) {
-        for (ReservationDto dto : reservationList) {
-            System.out.println(dto);
-        }
-    }
-
-    public static void diagnosisList(List<DiagnosisDto> diagnosisList) {
-        for (DiagnosisDto dto : diagnosisList) {
-            System.out.println(dto);
-        }
     }
 }
