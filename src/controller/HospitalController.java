@@ -73,12 +73,13 @@ public class HospitalController {
 		}catch(DMLException e ) {
 			System.out.println(e.getMessage());
 		}
+	}
 
 	/**
 	 * 환자 진료 내역 조회
 	 */
-	public static void diagnosisList() {
-		PatientDto patientDto = bringPatientSeq();
+	public static void diagnosisList(int patientSeq) {
+		PatientDto patientDto = new PatientDto(patientSeq);
 		try {
 			List<DiagnosisDto> list = hospitalService.diagSelectAllByPatient(patientDto);
 			SuccessView.diagnosisList(list);			
@@ -102,8 +103,8 @@ public class HospitalController {
 	/**
 	 * 환자 예약 조회
 	 */
-	public static void reservationList() {
-		PatientDto patientDto = bringPatientSeq();
+	public static void reservationList(int patientSeq) {
+		PatientDto patientDto = new PatientDto(patientSeq);
 		try {
 			List<ReservationDto> list = hospitalService.reserveSelectAllByPatient(patientDto);
 			SuccessView.reservationList(list);
@@ -113,17 +114,16 @@ public class HospitalController {
 	}
 	
 	/**
-	 * TODO 환자 번호 가져오기 빼기 
+	 * 환자 예약 변경
 	 */
-	public static PatientDto bringPatientSeq() {
-		SessionSet sessionSet = SessionSet.getInstance();
-		Set<Session> set = sessionSet.getSet();
-		Session session = null;
-		for(Session s : set) {
-			session = s;
+	public static void reservationModifyDate(ReservationDto reservDto) {
+		try {
+			hospitalService.updateReservation(reservDto);
+			SuccessView.messagePrint("변경성공하였습니다.");
+		} catch (DMLException e) {
+			FailView.errorMessage(e.getMessage());
 		}
-		int patientSeq = session.getPatientSeq();
-		PatientDto patientDto = new PatientDto(patientSeq);
-		return patientDto;
+		
+	
 	}
 }
