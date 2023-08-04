@@ -26,8 +26,10 @@ public class ReservationDto {
      * @param timeblockSeq
      */
     public ReservationDto(int patientSeq, int scheduleSeq, int reservationBlockSeq) {
-        this(patientSeq, scheduleSeq);
-        this.reservationBlockSeq = reservationBlockSeq;
+		this.scheduleSeq = scheduleSeq;
+		this.reservationBlockSeq = reservationBlockSeq;
+		this.patientSeq = patientSeq;
+		
     }
 
     /**

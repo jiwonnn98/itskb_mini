@@ -9,6 +9,8 @@ public class DoctorDto {
     private int deptCode;
 
     List<ScheduleDto> scheduleDtoList;
+    
+    public DoctorDto() {}
 
     // Parameterized constructor
     public DoctorDto(int doctorSeq, String doctorSSN, String doctorName, int deptCode) {
