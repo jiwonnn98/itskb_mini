@@ -205,44 +205,62 @@ public class MainView {
         int COL = 19;
         int[] timeBlock = new int[2];
 
-        System.out.println();
-        System.out.println("--- 시간 선택 (■ : 선택 가능, □ : 선택 불가능) ---");
-        System.out.print("    ");
-        for (int col = 1; col < 19; col++) {
-            int hours = (col + 17) / 2;
-            int minutes = ((col + 17) % 2) * 30;
-            System.out.printf("%02d:%02d ", hours, minutes);
-        }
-        System.out.println();
-        System.out.print("\t");
-        for (int col = 1; col < COL; col++) {
-            System.out.printf("%-6d", col);
-        }
-        System.out.println();
-
-        for (int row = 0; row < ROW; row++) {
-            System.out.printf("%-3d ", row);
-
-            for (int col = 1; col < COL; col++) {
-                if (availableTimeArray[row][col] >= 0) {
-                    // 선택 가능
-                    System.out.printf("%-6s", "■");
-                } else {
-                    // 선택 불가능
-                    System.out.printf("%-6s", "□");
-                }
+        while (true) {
+            System.out.println();
+            System.out.println("--- 시간 선택 (■ : 선택 가능, □ : 선택 불가능) ---");
+            System.out.print("    ");
+            for (int col = 1; col < 19; col++) {
+                int hours = (col + 17) / 2;
+                int minutes = ((col + 17) % 2) * 30;
+                System.out.printf("%02d:%02d ", hours, minutes);
             }
             System.out.println();
+            System.out.print("\t");
+            for (int col = 1; col < COL; col++) {
+                System.out.printf("%-6d", col);
+            }
+            System.out.println();
+
+            for (int row = 0; row < ROW; row++) {
+                System.out.printf("%-3d ", row);
+
+                for (int col = 1; col < COL; col++) {
+                    if (availableTimeArray[row][col] >= 0) {
+                        // 선택 가능
+                        System.out.printf("%-6s", "■");
+                    } else {
+                        // 선택 불가능
+                        System.out.printf("%-6s", "□");
+                    }
+                }
+                System.out.println();
+            }
+
+            System.out.println("--------------------------------------------------");
+            System.out.println("예약을 중단하시려면 -1을 입력해주세요. ");
+
+            System.out.print("날짜를 선택해 주세요. (오늘 0, 내일 1, 모레 2) : ");
+            timeBlock[0] = Integer.parseInt(sc.nextLine());
+            if (timeBlock[0] < -1 || timeBlock[0] > 2) {
+                System.out.println("날짜를 잘못 입력하셨습니다. ");
+                continue;
+            }
+            
+            System.out.print("시간을 선택해 주세요. : ");
+            timeBlock[1] = Integer.parseInt(sc.nextLine());
+            if (timeBlock[1] < -1 || timeBlock[1] > 18) {
+                System.out.println("날짜를 잘못 입력하셨습니다. ");
+                continue;
+            }
+
+            if (availableTimeArray[timeBlock[0]][timeBlock[1]] == -1) {
+                System.out.println("해당 시간은 선택할 수 없습니다.");
+                continue;
+            }
+
+            break;
+
         }
-        System.out.println("--------------------------------------------------");
-
-        System.out.println("예약을 중단하시려면 -1을 입력해주세요. ");
-        System.out.print("날짜를 선택해 주세요. (오늘 0, 내일 1, 모레 2) : ");
-        timeBlock[0] = Integer.parseInt(sc.nextLine());
-
-        System.out.print("시간을 선택해 주세요. : ");
-        timeBlock[1] = Integer.parseInt(sc.nextLine());
-
         return timeBlock;
     }
 
