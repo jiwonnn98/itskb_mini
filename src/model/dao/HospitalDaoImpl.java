@@ -119,7 +119,6 @@ public class HospitalDaoImpl implements HospitalDao {
 		PreparedStatement ps = null;
 		String sql = "insert into reservation values(reservation_seq.NEXTVAL, to_date(?, 'YYYY-MM-DD'), ?, ?, ?)";
 		int result = 0;
-		System.out.println(reserv.getPatientSeq());
 		try {
 			con = DBManager.getConnection();
 			ps = con.prepareStatement(sql);
