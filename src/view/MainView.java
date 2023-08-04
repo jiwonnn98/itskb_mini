@@ -1,16 +1,15 @@
 package view;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Scanner;
+
 import controller.HospitalController;
 import controller.PatientController;
 import model.dto.DeptDto;
-import model.dto.DiagnosisDto;
 import model.dto.DoctorDto;
-import model.dto.ReservationDto;
 import session.Session;
 import session.SessionSet;
-
-import java.util.List;
-import java.util.Scanner;
 
 public class MainView {
 
@@ -96,7 +95,18 @@ public class MainView {
                     logout(patientSeq);
                     return;
                 case 2:
-                    // TODO HospitalController.reservationAdd();
+                   List<DeptDto> deptList = HospitalController.deptList();
+                   int deptSeq = deptList(deptList);
+                   if(deptSeq == -1) break;
+                   List<DoctorDto> docList = HospitalController.docList(deptSeq);
+                   int doctorSeq = doctorTimeList(docList);
+                   if(doctorSeq == -1) break;
+                   int[][] timeArr = HospitalController.timeList(doctorSeq);
+                   int[] selectTime = reservationTimeArray(timeArr);
+   
+                   HospitalController.reservation(selectTime[0], selectTime[1], patientSeq, timeArr[selectTime[0]][0]);
+                     
+                   
                     break;
                 case 3:
                     // TODO HospitalController.reservationList();
@@ -115,6 +125,7 @@ public class MainView {
             }
         }
     }
+    
 
     public static int deptList(List<DeptDto> deptList) {
         System.out.println("부서 선택");
@@ -140,10 +151,11 @@ public class MainView {
         return doctor;
     }
 
-    public static int reservationTimeArray(int[][] availableTimeArray) {
+    public static int[] reservationTimeArray(int[][] availableTimeArray) {
         System.out.println("가능한 시간 선택");
         int ROW = availableTimeArray.length;
         int COL = availableTimeArray[0].length;
+        int[] timeBlock= new int[2];
 
         for (int day = 0; day < ROW; day++) {
             for (int time = 0; time < COL; time++) {
@@ -153,11 +165,10 @@ public class MainView {
         }
 
         System.out.print("날짜를 선택해 주세요. (오늘 0, 내일 1, 모레 2) : ");
-        int day = Integer.parseInt(sc.nextLine());
+        timeBlock[0] = Integer.parseInt(sc.nextLine());
         System.out.print("시간을 선택해 주세요. : ");
-        int time = Integer.parseInt(sc.nextLine());
 
-        int timeBlock = availableTimeArray[day][time];
+        timeBlock[1] = Integer.parseInt(sc.nextLine());
 
         return timeBlock;
     }

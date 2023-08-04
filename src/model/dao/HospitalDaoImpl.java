@@ -117,17 +117,16 @@ public class HospitalDaoImpl implements HospitalDao {
 	public int insertReservation(ReservationDto reserv) throws DMLException{
 		Connection con = null;
 		PreparedStatement ps = null;
-		String sql = "insert into reservation values(?, to_date(?, 'YYYY-MM-DD'), ?, ?, ?)";
+		String sql = "insert into reservation values(reservation_seq.NEXTVAL, to_date(?, 'YYYY-MM-DD'), ?, ?, ?)";
 		int result = 0;
 		System.out.println(reserv.getPatientSeq());
 		try {
 			con = DBManager.getConnection();
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, reserv.getReservationSeq());
-			ps.setString(2, reserv.getReservationDate());
-			ps.setInt(3, reserv.getPatientSeq());
-			ps.setInt(4, reserv.getScheduleSeq());
-			ps.setInt(5, reserv.getReservationBlockSeq());
+			ps.setString(1, reserv.getReservationDate());
+			ps.setInt(2, reserv.getPatientSeq());
+			ps.setInt(3, reserv.getScheduleSeq());
+			ps.setInt(4, reserv.getReservationBlockSeq());
 			result = ps.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
