@@ -15,6 +15,8 @@ public class PatientController {
 
     /**
      * 로그인
+     * @param patientName 환자 이름
+     * @param patientSSN 환자 주민등록번호
      */
     public static void login(String patientName, String patientSSN) {
         try {
@@ -28,6 +30,10 @@ public class PatientController {
 
     /**
      * 환자 등록
+     * @param patientName 환자 이름
+     * @param patientSSN 환자 주민등록번호
+     * @param patientAddr 환자 주소
+     * @param patientPhone 환자 휴대폰 번호
      */
     public static void insertPatient(String patientName, String patientSSN, String patientAddr, String patientPhone) {
         try {
